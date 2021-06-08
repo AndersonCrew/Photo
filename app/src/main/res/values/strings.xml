@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">CrewPhoto</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="domain_company">Domain Company</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="message">Message</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="user_id">UserId</string>
+    <string name="loading">Loading…</string>
+    <string name="required_domain">Please enter your company domain!</string>
+    <string name="required_userId">Please enter your userId</string>
+    <string name="required_password">Please enter your password!</string>
+    <string name="logout">Logout</string>
+    <string name="about_crewphoto">About CrewPhoto</string>
+    <string name="image_show">Image Show</string>
+    <string name="save">Save</string>
+    <string name="upload">Upload</string>
+    <string name="no_data">You don\'t have any Picture!</string>
+    <string name="local_gallery">Local Gallery</string>
+    <string name="local_file">Local File</string>
+    <string name="enter_name">Enter name</string>
+
+    <string-array name="filter_image">
+        <item>Standard</item>
+        <item>High</item>
+        <item>Original</item>
+    </string-array>
+</resources>
