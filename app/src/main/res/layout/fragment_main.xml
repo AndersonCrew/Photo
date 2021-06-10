@@ -38,9 +38,9 @@
                 android:layout_height="match_parent" />
 
             <ImageView
-                android:id="@+id/imgCam"
+                android:id="@+id/imgChoose"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/ic_baseline_photo_camera_24"
+                android:src="@drawable/logo"
                 android:padding="15dp"
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="match_parent" />
@@ -63,6 +63,22 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
             android:layout_height="0dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCamera"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="25dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+            <ImageView
+                android:padding="10dp"
+                android:background="@color/colorPrimaryDark"
+                android:src="@drawable/ic_baseline_photo_camera_24"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -162,6 +178,7 @@
             <!--Local File-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardLocalFile"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/vLocal"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_margin="20dp"
@@ -181,6 +198,7 @@
                 android:layout_marginStart="20dp"
                 android:text="@string/local_file"
                 android:textSize="15sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/cardLocalFile"
                 app:layout_constraintStart_toEndOf="@id/cardLocalFile"
                 app:layout_constraintTop_toTopOf="@id/cardLocalFile"
@@ -189,6 +207,7 @@
 
             <View
                 android:id="@+id/vLocalFile"
+                android:visibility="gone"
                 android:layout_marginTop="20dp"
                 android:background="@color/colorBlack"
                 android:alpha="0.4"

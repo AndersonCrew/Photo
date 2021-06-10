@@ -29,6 +29,7 @@ import com.google.gson.JsonObject
 class MainFragment : BaseFragment() {
     private var binding: FragmentMainBinding? = null
     private val REQUEST_CODE_TAKE_CAMERA = 121
+    private val REQUEST_CODE_CHOOSE_IMAGE = 123
     private val REQUEST_CODE_PERMISSION_STORAGE = 122
     private val viewModel: MainViewModel by viewModels ()
     private lateinit var adapter: ImageAdapter
@@ -46,7 +47,7 @@ class MainFragment : BaseFragment() {
             binding?.drawerLayout?.openDrawer(GravityCompat.START)
         }
 
-        binding?.imgCam?.setOnClickListener {
+        binding?.cardCamera?.setOnClickListener {
             if (!PermissionUtil.checkPermissions(
                     requireContext(),
                     PermissionUtil.permissionsStorage
@@ -72,8 +73,28 @@ class MainFragment : BaseFragment() {
            DialogUtil.getDialogUtil(requireContext()).createMessageDialog(resources.getString(R.string.message), message).show()
         }
 
+        binding?.imgChoose?.setOnClickListener {
+            if (!PermissionUtil.checkPermissions(
+                    requireContext(),
+                    PermissionUtil.permissionsStorage
+                )
+            ) {
+                PermissionUtil.requestPermissions(
+                    requireActivity(),
+                    REQUEST_CODE_CHOOSE_IMAGE,
+                    PermissionUtil.permissionsStorage
+                )
+            } else {
+                chooseImage()
+            }
+        }
+
         setUpRecyclerView()
         Event.getAllFile()
+    }
+
+    private fun chooseImage() {
+
     }
 
     private fun getAllFile() {
@@ -87,7 +108,7 @@ class MainFragment : BaseFragment() {
         viewModel.allFileMutableLiveData.observe(this, androidx.lifecycle.Observer {
             hideProgress(requireActivity() as BaseActivity)
             it?.let {
-
+                adapter.updateList(it)
             }
         })
 

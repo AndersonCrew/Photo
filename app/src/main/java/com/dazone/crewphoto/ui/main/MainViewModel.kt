@@ -29,9 +29,7 @@ class MainViewModel : BaseViewModel() {
                         object : TypeToken<List<FileModel>>() {}.type
                     )
 
-                    if (list != null) {
-                        allFileMutableLiveData.postValue( list)
-                    }
+                    allFileMutableLiveData.postValue( list)
 
                 } else {
                     val error: LinkedTreeMap<String, Any> = body["error"] as LinkedTreeMap<String, Any>
