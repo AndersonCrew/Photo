@@ -2,37 +2,45 @@ package com.dazone.crewphoto.ui.main
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.ClipData
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.dazone.crewphoto.BuildConfig
 import com.dazone.crewphoto.R
-import com.dazone.crewphoto.base.BaseActivity
 import com.dazone.crewphoto.base.BaseFragment
 import com.dazone.crewphoto.base.DazoneApplication
 import com.dazone.crewphoto.databinding.FragmentMainBinding
 import com.dazone.crewphoto.dialog.DialogUtil
 import com.dazone.crewphoto.event.Event
+import com.dazone.crewphoto.ui.AllFileFragment
+import com.dazone.crewphoto.ui.local_fragment.LocalFragment
 import com.dazone.crewphoto.utils.Constants
+import com.dazone.crewphoto.utils.FileUtils
 import com.dazone.crewphoto.utils.PermissionUtil
-import com.dazone.crewphoto.utils.Utils
-import com.google.gson.JsonObject
+import java.io.File
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainFragment : BaseFragment() {
     private var binding: FragmentMainBinding? = null
     private val REQUEST_CODE_TAKE_CAMERA = 121
     private val REQUEST_CODE_CHOOSE_IMAGE = 123
     private val REQUEST_CODE_PERMISSION_STORAGE = 122
     private val viewModel: MainViewModel by viewModels ()
-    private lateinit var adapter: ImageAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,11 +51,13 @@ class MainFragment : BaseFragment() {
     }
 
     override fun initEvents() {
+        mType = -1
+        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(),R.color.colorPrimaryDark)
         binding?.imgMenu?.setOnClickListener {
             binding?.drawerLayout?.openDrawer(GravityCompat.START)
         }
 
-        binding?.cardCamera?.setOnClickListener {
+        binding?.imgCamera?.setOnClickListener {
             if (!PermissionUtil.checkPermissions(
                     requireContext(),
                     PermissionUtil.permissionsStorage
@@ -73,7 +83,7 @@ class MainFragment : BaseFragment() {
            DialogUtil.getDialogUtil(requireContext()).createMessageDialog(resources.getString(R.string.message), message).show()
         }
 
-        binding?.imgChoose?.setOnClickListener {
+        binding?.cardChooseImage?.setOnClickListener {
             if (!PermissionUtil.checkPermissions(
                     requireContext(),
                     PermissionUtil.permissionsStorage
@@ -89,39 +99,50 @@ class MainFragment : BaseFragment() {
             }
         }
 
-        setUpRecyclerView()
-        Event.getAllFile()
+        binding?.tvLocalGallery?.setOnClickListener {
+            changeFragment(0)
+        }
+
+        binding?.cardLocalGallery?.setOnClickListener {
+            changeFragment(0)
+        }
+
+        binding?.tvCrewPhoto?.setOnClickListener {
+            changeFragment(1)
+        }
+
+        binding?.cardCrewPhoto?.setOnClickListener {
+            changeFragment(1)
+        }
+
+        changeFragment(1)
     }
 
     private fun chooseImage() {
+        val pickPhoto = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
 
-    }
-
-    private fun getAllFile() {
-        showProgress(requireActivity() as BaseActivity)
-        val params = JsonObject()
-        params.addProperty("sessionId", DazoneApplication.getInstance().mPref?.getString(Constants.ACCESS_TOKEN, ""))
-        viewModel.getAllFile(params)
+        pickPhoto.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        startActivityForResult(pickPhoto, REQUEST_CODE_CHOOSE_IMAGE)
     }
 
     override fun initViewModels() {
-        viewModel.allFileMutableLiveData.observe(this, androidx.lifecycle.Observer {
-            hideProgress(requireActivity() as BaseActivity)
-            it?.let {
-                adapter.updateList(it)
-            }
-        })
-
         viewModel.getUserLiveData()?.observe(this, Observer {
             it?.let {
                 binding?.tvName?.text = it.name?: ""
                 binding?.tvPosition?.text = it.companyName?: ""
+
+                binding?.imgAvatar?.let { image ->
+                    Glide
+                        .with(this)
+                        .load(DazoneApplication.getInstance().mPref?.getString(Constants.DOMAIN, "") + it.avatar)
+                        .placeholder(R.drawable.avatar_default)
+                        .into(image)
+                }
             }
         })
-    }
-
-    private fun setUpRecyclerView() {
-        adapter = ImageAdapter(arrayListOf())
     }
 
     private fun dispatchTakePictureIntent() {
@@ -137,8 +158,35 @@ class MainFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_TAKE_CAMERA && resultCode == Activity.RESULT_OK) {
             data?.let {
+                var files : ArrayList<File> = arrayListOf()
                 val imageBitmap = data.extras?.get("data") as Bitmap
-                Event.goToImageShow(imageBitmap)
+                FileUtils(requireContext()).bitmapToFile(imageBitmap, "CrewPhoto_${System.currentTimeMillis()}.jpg")?.let {
+                    files.add(it)
+                    Event.goToImageShowCapture(files)
+                }
+
+            }
+        } else if (requestCode == REQUEST_CODE_CHOOSE_IMAGE && resultCode == Activity.RESULT_OK) {
+            if (data?.clipData != null) {
+                try {
+                    //If uploaded with the new Android Photos gallery
+                    var files : ArrayList<File> = arrayListOf()
+                    val clipData: ClipData = data.clipData ?: return
+                    files.clear()
+
+                    for (i in 0 until clipData.itemCount) {
+                        //uri converted to file
+
+                        FileUtils(requireContext()).convertImageUriToFile(clipData.getItemAt(i).uri, requireActivity())?.let {
+                            files.add(it)
+                        }
+
+                    }
+
+                    Event.goToImageShow(files)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
         }
     }
@@ -161,11 +209,26 @@ class MainFragment : BaseFragment() {
         }
     }
 
-    override fun onEventReceive(it: Map<String, Any?>) {
-        super.onEventReceive(it)
-
-        it[Event.GET_ALL_FILE]?.let {
-            getAllFile()
+    private var mType: Int = 0
+    private fun changeFragment(type: Int) {
+        binding?.drawerLayout?.closeDrawer(Gravity.LEFT)
+        if(mType == type) {
+            return
+        } else {
+            mType = type
         }
+
+        val fragment : Fragment?
+        when(type) {
+            0 -> {
+                fragment = LocalFragment()
+            }
+
+            else -> {
+                fragment = AllFileFragment()
+            }
+        }
+
+        replaceFragment(fragment, R.id.frShow, fragment::class.java.simpleName)
     }
 }

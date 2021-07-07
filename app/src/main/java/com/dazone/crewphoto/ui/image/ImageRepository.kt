@@ -8,7 +8,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class ImageRepository: BaseRepository() {
-    suspend fun uploadFile(sessionId: RequestBody, file: MultipartBody.Part): Result<BaseResponse> {
-        return safeApiCall(call = { RetrofitFactory.getApiService().uploadFiles(sessionId, file)}, errorMessage =  "Cannot Upload!")
+    suspend fun uploadFile(sessionId: RequestBody, list: List<MultipartBody.Part>): Result<BaseResponse> {
+        return safeApiCall(call = { RetrofitFactory.getApiService().uploadFiles(sessionId, list)}, errorMessage =  "Cannot Upload!")
     }
 }

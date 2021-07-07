@@ -19,7 +19,7 @@ interface DazoneService {
     @POST(Config.UPLOAD_FILE)
     suspend fun uploadFiles(
         @Part("sessionId") memo: RequestBody,
-        @Part file: MultipartBody.Part): Response<BaseResponse>
+        @Part file: List<MultipartBody.Part>): Response<BaseResponse>
 
     @POST(Config.GET_FILE)
     suspend fun getAllFile(@Body param: JsonObject): Response<BaseResponse>

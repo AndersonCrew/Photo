@@ -1,4 +1,4 @@
-package com.dazone.crewphoto.ui.crew_photo
+package com.dazone.crewphoto.ui.date_file
 
 import android.os.Bundle
 import android.util.Log
@@ -8,53 +8,49 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dazone.crewphoto.R
-import com.dazone.crewphoto.base.BaseActivity
 import com.dazone.crewphoto.base.BaseFragment
 import com.dazone.crewphoto.base.DazoneApplication
-import com.dazone.crewphoto.databinding.FragmentCrewphotoBinding
+import com.dazone.crewphoto.databinding.FragmentListFileBinding
 import com.dazone.crewphoto.event.Event
-import com.dazone.crewphoto.ui.date_file.DateFileAdapter
+import com.dazone.crewphoto.ui.crew_photo.CrewPhotoViewModel
 import com.dazone.crewphoto.ui.main.ImageAdapter
 import com.dazone.crewphoto.utils.Constants
 import com.dazone.crewphoto.utils.SpacesItemDecoration
 import com.google.gson.JsonObject
 
-
-class CrewPhotoFragment: BaseFragment() {
+class ListFileFragment: BaseFragment() {
     private val viewModel: CrewPhotoViewModel by viewModels ()
-    private lateinit var adapter: DateFileAdapter
-    private var binding: FragmentCrewphotoBinding?= null
+    private lateinit var adapter: ImageAdapter
+    private var binding: FragmentListFileBinding?= null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCrewphotoBinding.inflate(inflater, container, false)
+        binding = FragmentListFileBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
     override fun initEvents() {
         setUpRecyclerView()
         getAllFile()
-        Log.d("CrewPhotoFragment", "initEvents")
     }
 
     override fun initViewModels() {
-        viewModel.allFileMutableLiveData.observe(this, androidx.lifecycle.Observer {
+        viewModel.allFileImagesMutableLiveData.observe(this, androidx.lifecycle.Observer {
             Log.d("CrewPhotoFragment", "allFileMutableLiveData")
             hideProgress()
-            it?.let {
-                adapter.updateList(it)
+            it?.let { it ->
+                adapter.updateList(it.sortedBy { it -> it.time })
             }
         })
     }
 
     private fun setUpRecyclerView() {
-        adapter = DateFileAdapter(arrayListOf())
-        binding?.rvCrewPhoto?.layoutManager = GridLayoutManager(requireContext(), 3)
-        binding?.rvCrewPhoto?.adapter = adapter
-        val spacingInPixels: Int = resources.getDimensionPixelSize(R.dimen.space_item)
-        binding?.rvCrewPhoto?.addItemDecoration(SpacesItemDecoration(spacingInPixels))
+        adapter = ImageAdapter(arrayListOf())
+        binding?.rvImages?.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding?.rvImages?.adapter = adapter
     }
 
     private fun getAllFile() {

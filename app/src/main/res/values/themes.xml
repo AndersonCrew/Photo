@@ -26,4 +26,8 @@
         <item name="fontFamily">@font/poppins_medium</item>
         <item name="android:textColor">@color/colorText</item>
     </style>
+
+    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
 </resources>

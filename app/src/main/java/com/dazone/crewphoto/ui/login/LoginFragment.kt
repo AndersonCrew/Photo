@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.dazone.crewphoto.R
-import com.dazone.crewphoto.base.BaseActivity
 import com.dazone.crewphoto.base.BaseFragment
 import com.dazone.crewphoto.base.DazoneApplication
 import com.dazone.crewphoto.databinding.FragmentLoginBinding
@@ -35,7 +34,7 @@ class LoginFragment : BaseFragment() {
     override fun initEvents() {
         binding?.btnLogin?.setOnClickListener {
             if(checkValidation().isNullOrEmpty()) {
-                showProgress(requireActivity() as BaseActivity)
+                showProgress()
                 Utils.setServerSite(binding?.etDomain?.text.toString(), binding?.etUserId?.text.toString(), binding?.etPassword?.text.toString())
                 checkSSL()
             } else {
@@ -79,7 +78,7 @@ class LoginFragment : BaseFragment() {
 
         viewModel.loginSuccess.observe(this, Observer {
             if (it != null && it) {
-                hideProgress(requireActivity() as BaseActivity)
+                hideProgress()
                 Event.goToMain()
             }
         })
@@ -94,7 +93,7 @@ class LoginFragment : BaseFragment() {
             it?.let {
                 DialogUtil.getDialogUtil(requireContext()).createMessageDialog(resources.getString(R.string.message), it).show()
                 viewModel.errorMessage.value = null
-                hideProgress(requireActivity() as BaseActivity)
+                hideProgress()
             }
         })
     }

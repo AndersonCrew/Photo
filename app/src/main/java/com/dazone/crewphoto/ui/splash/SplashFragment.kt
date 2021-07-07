@@ -24,9 +24,9 @@ class SplashFragment : BaseFragment() {
         return binding?.root
     }
     override fun initEvents() {
-        showProgress(requireActivity() as BaseActivity)
+        showProgress()
         Handler(Looper.getMainLooper()).postDelayed({
-            hideProgress(requireActivity() as BaseActivity)
+            hideProgress()
             if(DazoneApplication.getInstance().mPref?.getString(Constants.ACCESS_TOKEN, "").isNullOrEmpty()) {
                 Event.goToLogin()
             } else {

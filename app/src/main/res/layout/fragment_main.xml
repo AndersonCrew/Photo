@@ -38,9 +38,9 @@
                 android:layout_height="match_parent" />
 
             <ImageView
-                android:id="@+id/imgChoose"
+                android:id="@+id/imgCamera"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/logo"
+                android:src="@drawable/ic_baseline_photo_camera_24"
                 android:padding="15dp"
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="match_parent" />
@@ -65,7 +65,7 @@
             android:layout_height="0dp"/>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardCamera"
+            android:id="@+id/cardChooseImage"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="10dp"
@@ -75,7 +75,7 @@
             <ImageView
                 android:padding="10dp"
                 android:background="@color/colorPrimaryDark"
-                android:src="@drawable/ic_baseline_photo_camera_24"
+                android:src="@drawable/logo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </androidx.cardview.widget.CardView>
@@ -140,6 +140,7 @@
             <!--Local Gallery-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardLocalGallery"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/csHeader"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_margin="20dp"
@@ -159,6 +160,7 @@
                 android:layout_marginStart="20dp"
                 android:text="@string/local_gallery"
                 android:textSize="15sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/cardLocalGallery"
                 app:layout_constraintStart_toEndOf="@id/cardLocalGallery"
                 app:layout_constraintTop_toTopOf="@id/cardLocalGallery"
@@ -170,6 +172,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@color/colorBlack"
                 android:alpha="0.4"
+                android:visibility="gone"
                 android:layout_marginStart="20dp"
                 app:layout_constraintTop_toBottomOf="@id/cardLocalGallery"
                 android:layout_width="match_parent"

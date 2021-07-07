@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpAllFile"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/vLine"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    <View
+        android:id="@+id/vLine"
+        android:background="@color/colorText"
+        android:alpha="0.6"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0.5dp"
+        android:layout_height="15dp"/>
+
+    <TextView
+        android:id="@+id/tvAlbum"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintEnd_toStartOf="@id/vLine"
+        app:layout_constraintTop_toTopOf="@id/vLine"
+        app:layout_constraintBottom_toBottomOf="@id/vLine"
+        android:text="@string/album"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvAllImage"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/colorBlack"
+        android:alpha="0.6"
+        app:layout_constraintStart_toEndOf="@id/vLine"
+        app:layout_constraintTop_toTopOf="@id/vLine"
+        app:layout_constraintBottom_toBottomOf="@id/vLine"
+        android:text="@string/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

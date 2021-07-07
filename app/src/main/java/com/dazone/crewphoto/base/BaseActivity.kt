@@ -20,8 +20,6 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
         DazoneApplication.eventBus
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
@@ -38,16 +36,16 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun initViewModels()
     open fun onEventReceive(it: Map<String, Any?>) {}
 
-    fun addFragment(resId: Int, fragment: BaseFragment) {
+    fun addFragment(resId: Int, fragment: BaseFragment, strBackStack: String?) {
         supportFragmentManager
             .beginTransaction()
             .add(resId, fragment)
             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-            .addToBackStack(fragment::class.simpleName)
+            .addToBackStack(null)
             .commit()
     }
 
-    fun replaceFragment(resId: Int, fragment: BaseFragment) {
+    fun replaceFragment(resId: Int, fragment: BaseFragment, strBackStack: String?) {
         supportFragmentManager
             .beginTransaction()
             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
@@ -57,7 +55,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun showProgress() {
-        if(dialogProgress?.isShowing == false) {
+        if(dialogProgress?.isShowing == false && !isFinishing) {
             dialogProgress?.show()
         }
     }

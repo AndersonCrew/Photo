@@ -23,6 +23,8 @@
     <string name="local_gallery">Local Gallery</string>
     <string name="local_file">Local File</string>
     <string name="enter_name">Enter name</string>
+    <string name="album">Album</string>
+    <string name="image">Image</string>
 
     <string-array name="filter_image">
         <item>Standard</item>
