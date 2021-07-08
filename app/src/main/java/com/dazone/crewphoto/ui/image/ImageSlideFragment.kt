@@ -11,14 +11,17 @@ import android.widget.Toast
 import androidx.fragment.app.*
 import androidx.lifecycle.Observer
 import com.dazone.crewphoto.base.BaseFragment
+import com.dazone.crewphoto.base.DazoneApplication
 import com.dazone.crewphoto.databinding.FragmentImageSlideBinding
 import com.dazone.crewphoto.event.Event
 import com.dazone.crewphoto.model.FileModel
+import com.dazone.crewphoto.utils.Constants
+import com.dazone.crewphoto.utils.SharePreferencesUtils
 import kotlinx.coroutines.launch
 import java.io.File
 
 
-class ImageSlideFragment(var files: ArrayList<File>?, private val file: FileModel?, private val isCapture: Boolean) : BaseFragment() {
+class ImageSlideFragment(var files: ArrayList<File>?, private val isCapture: Boolean, private val listFileModels: ArrayList<FileModel>?) : BaseFragment() {
     private var binding: FragmentImageSlideBinding?= null
     private val viewModel: ImageViewModel by viewModels()
     override fun onCreateView(
@@ -39,18 +42,19 @@ class ImageSlideFragment(var files: ArrayList<File>?, private val file: FileMode
                 saveImage()
             }
 
-            if(!files.isNullOrEmpty() && file == null) {
+            if(!files.isNullOrEmpty()) {
                 sendMultipleImage()
             }
         }
 
         /*SetUp ViewPager*/
-        if(files.isNullOrEmpty() && file != null) {
-            val adapter = MyPagerAdapter(requireActivity().supportFragmentManager, arrayListOf(), file)
+        if(files.isNullOrEmpty() && !listFileModels.isNullOrEmpty()) {
+            val adapter = MyPagerAdapter(requireActivity().supportFragmentManager, arrayListOf(), listFileModels)
             binding?.vpImage?.adapter = adapter
             binding?.header?.visibility = View.GONE
+            binding?.vpImage?.currentItem = SharePreferencesUtils(DazoneApplication.getInstance()).getInt(Constants.INDEX_FILE, 0)
         } else {
-            val adapter = MyPagerAdapter(requireActivity().supportFragmentManager, files!!, null)
+            val adapter = MyPagerAdapter(requireActivity().supportFragmentManager, files!!, arrayListOf())
             binding?.vpImage?.adapter = adapter
         }
     }
@@ -92,17 +96,17 @@ class ImageSlideFragment(var files: ArrayList<File>?, private val file: FileMode
         })
     }
 
-    class MyPagerAdapter(fragmentManager: FragmentManager, private val files: ArrayList<File>, private val file: FileModel?) :
+    class MyPagerAdapter(fragmentManager: FragmentManager, private val files: ArrayList<File>, private val listFileModels: ArrayList<FileModel>) :
         FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         // Returns total number of pages
         override fun getCount(): Int {
-            return if(files.isNullOrEmpty()) 1 else files.size
+            return if(!files.isNullOrEmpty()) files.size else if(!listFileModels.isNullOrEmpty()) listFileModels.size else 1
         }
 
         // Returns the fragment to display for that page
         override fun getItem(position: Int): Fragment {
             return when (files.size) {
-                0 -> ImageShowFragment(null, true, file)
+                0 -> ImageShowFragment(null, true, listFileModels[position])
                  else -> ImageShowFragment(files[position], false, null)
             }
         }
@@ -124,7 +128,7 @@ class ImageSlideFragment(var files: ArrayList<File>?, private val file: FileMode
                 if(files?.contains(file) == true && files?.size?: 0 > 1) {
                     files?.remove(file)
 
-                    val adapter = MyPagerAdapter(requireActivity().supportFragmentManager, files!!, null)
+                    val adapter = MyPagerAdapter(requireActivity().supportFragmentManager, files!!, arrayListOf())
                     binding?.vpImage?.adapter = adapter
                 } else {
                     requireActivity().onBackPressed()

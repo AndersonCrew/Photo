@@ -1,8 +1,5 @@
 package com.dazone.crewphoto.ui.date_file
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.dazone.crewphoto.R
 import com.dazone.crewphoto.base.DazoneApplication
 import com.dazone.crewphoto.databinding.ItemDateFileBinding
+import com.dazone.crewphoto.event.Event
 import com.dazone.crewphoto.model.DateFile
 import com.dazone.crewphoto.utils.Constants
 
@@ -20,7 +18,6 @@ class DateFileAdapter(private val list: ArrayList<DateFile>): RecyclerView.Adapt
     class DateFileViewHolder(private val binding: ItemDateFileBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: DateFile) {
             binding.tvDate.text = data.date
-
 
             val domain = DazoneApplication.getInstance().mPref?.getString(Constants.DOMAIN, "")
             Glide
@@ -32,7 +29,7 @@ class DateFileAdapter(private val list: ArrayList<DateFile>): RecyclerView.Adapt
 
             if(data.list.size > 1) {
                 binding.tvCount.visibility = View.VISIBLE
-                binding.tvCount.text = "+${data.list.size - 1}"
+                binding.tvCount.text = "+${data.list.size}"
             } else {
                 binding.tvCount.visibility = View.GONE
             }
@@ -55,6 +52,9 @@ class DateFileAdapter(private val list: ArrayList<DateFile>): RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: DateFileViewHolder, position: Int) {
         holder.bind(list[position])
+        holder.itemView.setOnClickListener {
+            Event.goToListDate(list[position].list)
+        }
     }
 
     fun updateList(mList: List<DateFile>) {

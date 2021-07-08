@@ -3,4 +3,5 @@
     <dimen name="margin_left_dp">35dp</dimen>
     <dimen name="margin_right_dp">35dp</dimen>
     <dimen name="space_item">10dp</dimen>
+    <dimen name="padding_icon_back">17dp</dimen>
 </resources>

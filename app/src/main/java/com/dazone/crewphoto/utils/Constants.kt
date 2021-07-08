@@ -9,4 +9,5 @@ object Constants {
     const val PASSWORD = "PASSWORD"
     const val COMPANY_NAME = "COMPANY_NAME"
     const val HAS_SSL = "HAS_SSL"
+    const val INDEX_FILE = "INDEX_FILE"
 }

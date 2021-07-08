@@ -41,7 +41,7 @@ abstract class BaseActivity : AppCompatActivity() {
             .beginTransaction()
             .add(resId, fragment)
             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-            .addToBackStack(null)
+            .addToBackStack(strBackStack)
             .commit()
     }
 

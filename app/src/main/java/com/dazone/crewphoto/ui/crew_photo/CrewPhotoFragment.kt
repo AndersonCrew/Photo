@@ -44,7 +44,7 @@ class CrewPhotoFragment: BaseFragment() {
             Log.d("CrewPhotoFragment", "allFileMutableLiveData")
             hideProgress()
             it?.let {
-                adapter.updateList(it)
+                adapter.updateList(it.sortedBy { it.time })
             }
         })
     }

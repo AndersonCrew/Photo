@@ -6,6 +6,7 @@ import com.dazone.crewphoto.base.BaseActivity
 import com.dazone.crewphoto.databinding.ActivityMainBinding
 import com.dazone.crewphoto.event.Event
 import com.dazone.crewphoto.model.FileModel
+import com.dazone.crewphoto.ui.date_file.ListFileFragment
 import com.dazone.crewphoto.ui.image.ImageShowFragment
 import com.dazone.crewphoto.ui.image.ImageSlideFragment
 import com.dazone.crewphoto.ui.main.MainFragment
@@ -24,6 +25,7 @@ class MainActivity : BaseActivity() {
 
     override fun initEvents() {
         replaceFragment(R.id.frMain, SplashFragment(), null)
+        supportFragmentManager
     }
 
     override fun initViewModels() {
@@ -41,16 +43,20 @@ class MainActivity : BaseActivity() {
             replaceFragment(R.id.frMain, MainFragment(), null)
         }
 
-        it[Event.GOTO_IMAGE_SHƠW]?.let {
-            replaceFragment(R.id.frMain, ImageSlideFragment(it as ArrayList<File>, null, false), null)
+        it[Event.GOTO_IMAGE_DETAIL]?.let {
+            replaceFragment(R.id.frMain, ImageSlideFragment(it as ArrayList<File>, false, null), null)
         }
 
-        it[Event.GOTO_IMAGE_SHƠW_CAP]?.let {
-            replaceFragment(R.id.frMain, ImageSlideFragment(it as ArrayList<File>, null, true), null)
+        it[Event.GOTO_IMAGE_CAP]?.let {
+            replaceFragment(R.id.frMain, ImageSlideFragment(it as ArrayList<File>, true, null), null)
         }
 
         it[Event.GOTO_DETAIL]?.let {
-            replaceFragment(R.id.frMain, ImageSlideFragment(null, it as FileModel, false), null)
+            replaceFragment(R.id.frMain, ImageSlideFragment(null, false, it as ArrayList<FileModel>), null)
+        }
+
+        it[Event.GOTO_LIST_DATE]?.let {
+            replaceFragment(R.id.frMain, ListFileFragment(it as ArrayList<FileModel>), null)
         }
     }
 

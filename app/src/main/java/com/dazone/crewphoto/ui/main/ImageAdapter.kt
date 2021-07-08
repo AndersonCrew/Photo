@@ -28,7 +28,7 @@ class ImageAdapter(private val list: ArrayList<FileModel>): RecyclerView.Adapter
                 .into(binding.imgFile)
 
             binding.tvName.text = fileModel.name?: "-"
-            binding.tvTime.text = SimpleDateFormat("dd/MM/yyyy hh:mm").format(Date(fileModel.time))
+            binding.tvTime.text = SimpleDateFormat("dd-MM-yyyy hh:mm").format(Date(fileModel.time))
         }
     }
 
@@ -50,7 +50,7 @@ class ImageAdapter(private val list: ArrayList<FileModel>): RecyclerView.Adapter
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
        holder.bindView(list[position])
         holder.itemView.setOnClickListener {
-            Event.goToDetailImage(list[position])
+            Event.goToDetailImage(list[position], list)
         }
     }
 

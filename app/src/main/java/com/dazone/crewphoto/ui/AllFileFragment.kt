@@ -26,7 +26,7 @@ class AllFileFragment: BaseFragment() {
     }
     override fun initEvents() {
         val adapter = MyPagerAdapter(
-            requireActivity().supportFragmentManager
+            childFragmentManager
         )
 
         binding?.vpAllFile?.adapter = adapter
@@ -68,7 +68,7 @@ class AllFileFragment: BaseFragment() {
         override fun getItem(position: Int): Fragment {
             return when (position) {
                 0 -> CrewPhotoFragment()
-                else -> ListFileFragment()
+                else -> ListFileFragment(null)
             }
         }
 
