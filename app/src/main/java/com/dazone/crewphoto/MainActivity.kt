@@ -13,6 +13,7 @@ import com.dazone.crewphoto.ui.main.MainFragment
 import com.dazone.crewphoto.ui.splash.SplashFragment
 import com.dazone.crewphoto.ui.login.LoginFragment
 import java.io.File
+import kotlin.system.exitProcess
 
 @Suppress("UNCHECKED_CAST")
 class MainActivity : BaseActivity() {
@@ -62,7 +63,7 @@ class MainActivity : BaseActivity() {
 
     override fun onBackPressed() {
         if(supportFragmentManager.findFragmentById(R.id.frMain) is LoginFragment || supportFragmentManager.findFragmentById(R.id.frMain) is MainFragment) {
-            finish()
+            exitProcess(0)
         } else {
             super.onBackPressed()
         }

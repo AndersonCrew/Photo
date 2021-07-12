@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">크루포토</string>
+    <string name="username">개인 아이디</string>
+    <string name="password">비밀번호</string>
+    <string name="domain_company">단체(회사) 아이디</string>
+    <string name="login">로그인</string>
+    <string name="forgot_password">비밀번호 찾기</string>
+    <string name="message">메시지</string>
+    <string name="yes">확인</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="user_id">개인 아이디</string>
+    <string name="loading">로딩중…</string>
+    <string name="required_domain">단체(회사) 아이디 입력하세요.</string>
+    <string name="required_userId">개인 아이디 입력하세요.</string>
+    <string name="required_password">비밀번호 입력하세요.</string>
+    <string name="logout">로그아웃</string>
+    <string name="about_crewphoto">크루포토 정보</string>
+    <string name="image_show">Image Show</string>
+    <string name="save">저장</string>
+    <string name="upload">업로드</string>
+    <string name="no_data">사진이 없습니다</string>
+    <string name="local_gallery">핸드폰 앨범</string>
+    <string name="local_file">핸드폰 파일</string>
+    <string name="enter_name">이름 입력하세요</string>
+    <string name="album">앨범</string>
+    <string name="image">사진</string>
+
+    <string-array name="filter_image">
+        <item>일반</item>
+        <item>고화질</item>
+        <item>원본</item>
+    </string-array>
+</resources>

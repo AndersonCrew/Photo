@@ -20,7 +20,6 @@ import com.dazone.crewphoto.utils.SharePreferencesUtils
 import kotlinx.coroutines.launch
 import java.io.File
 
-
 class ImageSlideFragment(var files: ArrayList<File>?, private val isCapture: Boolean, private val listFileModels: ArrayList<FileModel>?) : BaseFragment() {
     private var binding: FragmentImageSlideBinding?= null
     private val viewModel: ImageViewModel by viewModels()

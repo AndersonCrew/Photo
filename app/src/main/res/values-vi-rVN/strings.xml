@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CrewPhoto</string>
+    <string name="username">ID cá nhân</string>
+    <string name="password">Mật khẩu</string>
+    <string name="domain_company">ID tổ chức(công ty)</string>
+    <string name="login">Đăng nhập</string>
+    <string name="forgot_password">Quên mật khẩu</string>
+    <string name="message">Tin nhắn</string>
+    <string name="yes">Xác nhận</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="user_id">ID cá nhân</string>
+    <string name="loading">Đang load…</string>
+    <string name="required_domain">Vui lòng nhập ID tổ chức(công ty).</string>
+    <string name="required_userId">Vui lòng nhập ID cá nhân.</string>
+    <string name="required_password">Vui lòng nhập mật khẩu.</string>
+    <string name="logout">Thoát</string>
+    <string name="about_crewphoto">Thông tin app</string>
+    <string name="image_show">Image Show</string>
+    <string name="save">Lưu</string>
+    <string name="upload">Upload</string>
+    <string name="no_data">Không có hình ảnh</string>
+    <string name="local_gallery">Local album</string>
+    <string name="local_file">Local file</string>
+    <string name="enter_name">Vui lòng nhập tên</string>
+    <string name="album">Album</string>
+    <string name="image">Hình</string>
+
+    <string-array name="filter_image">
+        <item>Thường</item>
+        <item>Cao</item>
+        <item>Gốc</item>
+    </string-array>
+</resources>

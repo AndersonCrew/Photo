@@ -53,16 +53,4 @@ abstract class BaseActivity : AppCompatActivity() {
             .addToBackStack(null)
             .commit()
     }
-
-    fun showProgress() {
-        if(dialogProgress?.isShowing == false && !isFinishing) {
-            dialogProgress?.show()
-        }
-    }
-
-    fun hideProgress() {
-        if(dialogProgress?.isShowing == true) {
-            dialogProgress?.dismiss()
-        }
-    }
 }

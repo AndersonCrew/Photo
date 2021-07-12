@@ -43,7 +43,7 @@ class ListFileFragment(private val list: ArrayList<FileModel>?): BaseFragment() 
             getAllFile()
         } else {
             binding?.csHeader?.visibility = View.VISIBLE
-            binding?.tvTitle?.text = SimpleDateFormat("dd-MM-yyyy").format(list[0].time)
+            binding?.tvTitle?.text = SimpleDateFormat("yyyy-MM-dd").format(list[0].time)
             adapter.updateList(list.sortedBy { it.time })
         }
 

@@ -55,7 +55,7 @@ class CrewPhotoViewModel : BaseViewModel() {
         uiScope.launch {
             var map: HashMap<String, ArrayList<FileModel>> = hashMapOf()
             for(i in list.indices) {
-                val date = SimpleDateFormat("dd-MM-yyyy").format(list[i].time)
+                val date = SimpleDateFormat("yyyy-MM-dd").format(list[i].time)
                 if(map.containsKey(date)) {
                     map[date]?.add(list[i])
                 } else {
@@ -67,7 +67,7 @@ class CrewPhotoViewModel : BaseViewModel() {
             val listDate: ArrayList<DateFile> = arrayListOf()
             for ((key, value) in map) {
                 val dateFile = DateFile(key, value)
-                val time = SimpleDateFormat("dd-MM-yyyy").parse(key).time
+                val time = SimpleDateFormat("yyyy-MM-dd").parse(key).time
                 dateFile.time = time
                 listDate.add(dateFile)
             }

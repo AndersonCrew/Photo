@@ -1,10 +1,10 @@
 package com.dazone.crewphoto.base
 
+import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
 import androidx.fragment.app.Fragment
 import com.dazone.crewphoto.dialog.DialogUtil
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -14,6 +14,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+
 
 abstract class BaseFragment: Fragment() {
     private val viewModelJob = Job()
@@ -60,7 +61,7 @@ abstract class BaseFragment: Fragment() {
     }
 
     fun showProgress() {
-        if(dialogProgress?.isShowing == false) {
+        if(dialogProgress?.isShowing == false && !requireActivity().isFinishing) {
             dialogProgress?.show()
             handlerTimeOutProgress.postDelayed(mRunnable, 5000)
         }

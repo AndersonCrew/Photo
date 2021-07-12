@@ -28,7 +28,7 @@ class ImageAdapter(private val list: ArrayList<FileModel>): RecyclerView.Adapter
                 .into(binding.imgFile)
 
             binding.tvName.text = fileModel.name?: "-"
-            binding.tvTime.text = SimpleDateFormat("dd-MM-yyyy hh:mm").format(Date(fileModel.time))
+            binding.tvTime.text = SimpleDateFormat("yyyy-MM-dd hh:mm").format(Date(fileModel.time))
         }
     }
 
