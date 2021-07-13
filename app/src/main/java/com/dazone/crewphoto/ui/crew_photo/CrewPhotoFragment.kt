@@ -53,8 +53,6 @@ class CrewPhotoFragment: BaseFragment() {
         adapter = DateFileAdapter(arrayListOf())
         binding?.rvCrewPhoto?.layoutManager = GridLayoutManager(requireContext(), 3)
         binding?.rvCrewPhoto?.adapter = adapter
-        val spacingInPixels: Int = resources.getDimensionPixelSize(R.dimen.space_item)
-        binding?.rvCrewPhoto?.addItemDecoration(SpacesItemDecoration(spacingInPixels))
     }
 
     private fun getAllFile() {

@@ -40,6 +40,12 @@ class ImageAdapter(private val list: ArrayList<FileModel>): RecyclerView.Adapter
         params.height = ConstraintLayout.LayoutParams.WRAP_CONTENT
         binding.root.layoutParams = params
 
+        var childParams = binding.cardImage.layoutParams as ConstraintLayout.LayoutParams
+        childParams.width = size - 40
+        childParams.height = size - 40
+        childParams.topMargin = 20
+        binding.cardImage.layoutParams = childParams
+
         return ImageViewHolder(binding)
     }
 

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dazone.crewphoto.R
@@ -12,7 +13,6 @@ import com.dazone.crewphoto.databinding.ItemDateFileBinding
 import com.dazone.crewphoto.event.Event
 import com.dazone.crewphoto.model.DateFile
 import com.dazone.crewphoto.utils.Constants
-
 
 class DateFileAdapter(private val list: ArrayList<DateFile>): RecyclerView.Adapter<DateFileAdapter.DateFileViewHolder>(){
     class DateFileViewHolder(private val binding: ItemDateFileBinding): RecyclerView.ViewHolder(binding.root) {
@@ -43,6 +43,13 @@ class DateFileAdapter(private val list: ArrayList<DateFile>): RecyclerView.Adapt
         params.width = size
         params.height = ConstraintLayout.LayoutParams.WRAP_CONTENT
         binding.root.layoutParams = params
+
+        var childParams = binding.cardImage.layoutParams as ConstraintLayout.LayoutParams
+        childParams.width = size - 40
+        childParams.height = size - 40
+        childParams.topMargin = 30
+        binding.cardImage.layoutParams = childParams
+
         return DateFileViewHolder((binding))
     }
 
